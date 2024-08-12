@@ -14,7 +14,7 @@ db.connect();
 app.use(express.json());
 
 app.get('/api/flashcards', (req, res) => {
-  db.query('SELECT * FROM flashcards', (err, results) => {
+  db.query('SELECT * FROM flashcards_db', (err, results) => {
     if (err) throw err;
     res.json(results);
   });
@@ -22,7 +22,7 @@ app.get('/api/flashcards', (req, res) => {
 
 app.post('/api/flashcards', (req, res) => {
   const { question, answer } = req.body;
-  db.query('INSERT INTO flashcards (question, answer) VALUES (?, ?)', [question, answer], (err, result) => {
+  db.query('INSERT INTO flashcards_db (question, answer) VALUES (?, ?)', [question, answer], (err, result) => {
     if (err) throw err;
     res.json({ id: result.insertId, question, answer });
   });
@@ -30,14 +30,14 @@ app.post('/api/flashcards', (req, res) => {
 
 app.put('/api/flashcards/:id', (req, res) => {
   const { question, answer } = req.body;
-  db.query('UPDATE flashcards SET question = ?, answer = ? WHERE id = ?', [question, answer, req.params.id], (err) => {
+  db.query('UPDATE flashcards_db SET question = ?, answer = ? WHERE id = ?', [question, answer, req.params.id], (err) => {
     if (err) throw err;
     res.send('Flashcard updated');
   });
 });
 
 app.delete('/api/flashcards/:id', (req, res) => {
-  db.query('DELETE FROM flashcards WHERE id = ?', [req.params.id], (err) => {
+  db.query('DELETE FROM flashcards_db WHERE id = ?', [req.params.id], (err) => {
     if (err) throw err;
     res.send('Flashcard deleted');
   });
