@@ -1,6 +1,7 @@
 const express = require('express');
 const mysql = require('mysql2');
 const app = express();
+const cors = require('cors');
 require('dotenv').config();
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -10,6 +11,10 @@ const db = mysql.createConnection({
 });
 
 db.connect();
+
+app.use(cors({
+  origin: '*'
+}));
 
 app.use(express.json());
 
